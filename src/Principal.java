@@ -6,7 +6,7 @@
  * Prof Alexandre Gonçalves da Silva 
  *
  * Baseado nos slides 8 da aula do dia 20/10/2017 
- * Página 446 Cormen 3a Ed
+ * Página 446 Thomas H. Cormen 3a Ed
  *
  * Realiza a Ordenação Topológica.
  */
@@ -184,7 +184,7 @@ public class Principal {
 
         //Matriz de incidência para um grafo direcionado     
         //Grafo do slide 9
-        //Página 446 Cormen 3ed
+        //Página 446 Thomas H. Cormen 3ed
        
                 int G[][] = 
                //c  g  p  c  r  c  c  s  m
