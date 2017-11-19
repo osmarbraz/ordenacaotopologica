@@ -6,9 +6,10 @@
  * Prof Alexandre Gonçalves da Silva 
  *
  * Baseado nos slides 8 da aula do dia 20/10/2017 
+ *
  * Página 446 Thomas H. Cormen 3a Ed
  *
- * Realiza a Ordenação Topológica.
+ * Ordenação Topológica/Topological Sort
  */
 
 /**
@@ -72,14 +73,14 @@ public class Principal {
      * @param s Origem no grafo
      * @param v Destino no grafo
      */
-    public static void printPath(int[][] G, int s, int v) {
+    public static void mostrarCaminho(int[][] G, int s, int v) {
         if (v == s) {
             System.out.println("Cheguei em:" + trocar(s));
         } else {
             if (pi[v] == -1) {
                 System.out.println("Não existe caminho de " + trocar(s) + " a " + trocar(v));
             } else {
-                printPath(G, s, pi[v]);
+                mostrarCaminho(G, s, pi[v]);
                 System.out.println("Visitando:" + trocar(v));
             }
         }
@@ -198,7 +199,7 @@ public class Principal {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},//sapatos
                 {0, 0, 0, 0, 0, 0, 0, 1, 0}};//meias
     
-        System.out.println("Ordenação Topológica");
+        System.out.println(">>> Ordenação Topológica/Topological Sort <<<");
 
         //Monta as árvores de busca
         ordenacaoTopologica(G);
