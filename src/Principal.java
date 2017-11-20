@@ -34,10 +34,7 @@ public class Principal {
     //Vertor dos pais de um vértice
     static int pi[];
     static int tempo;
-    
-    //Lista do retorno da ordenação topologica
-    static LinkedList lista;
-
+        
     /**
      * Troca um número que representa a posição pela vértice do grafo.
      *
@@ -65,27 +62,7 @@ public class Principal {
         }
         return pos;
     }
-
-    /**
-     * Mostra o caminho de s até v no grafo G
-     *
-     * @param G Matriz de incidência do grafo
-     * @param s Origem no grafo
-     * @param v Destino no grafo
-     */
-    public static void mostrarCaminho(int[][] G, int s, int v) {
-        if (v == s) {
-            System.out.println("Cheguei em:" + trocar(s));
-        } else {
-            if (pi[v] == -1) {
-                System.out.println("Não existe caminho de " + trocar(s) + " a " + trocar(v));
-            } else {
-                mostrarCaminho(G, s, pi[v]);
-                System.out.println("Visitando:" + trocar(v));
-            }
-        }
-    }
-
+    
     /**
      * Constrói recursivamente uma Árvore de Busca em profundidade. com raiz u.
      *
@@ -95,34 +72,31 @@ public class Principal {
      * 
      * @param G Matriz de incidência do grafo
      * @param u Vértice raiz da árvore de busca
+     * @param lista Lista com a ordenação topológica de G
      */
-    public static void buscaEmProfundidadeVisita(int[][] G, int u) {
+    public static void buscaEmProfundidadeVisita(int[][] G, int u, LinkedList lista) {
         //Quantidade vértices do grafo
         int n = G.length;
 
-        System.out.println("Visitando:" + trocar(u));
         cor[u] = CINZA;
         tempo = tempo + 1; //Vértice branco u acabou de ser descoberto
         d[u] = tempo;
-        System.out.println("Empilhando:" + trocar(u));
         // Exporar as arestas (u,v)
         for (int v = 0; v < n; v++) {
             //Somente com os adjancentes ao vértice u
             if (G[u][v] != 0) {
                 //Somente vértices nao visitados
                 if (cor[v] == BRANCO) {
-                    System.out.println("Adjacente de " + trocar(u) + " = " + trocar(v));
                     pi[v] = u;
-                    buscaEmProfundidadeVisita(G, v);
+                    buscaEmProfundidadeVisita(G, v, lista);
                 }
             }
         }
-        System.out.println("Desempilhando:" + trocar(u));
         //Vértice u foi visitado e finalizado
         cor[u] = PRETO;
         tempo = tempo + 1;
         f[u] = tempo;     
-        //Adiciona no início da lista da ordenação topologica
+        //Adiciona no início da lista da ordenação topologica depois do vértices estar visitado
         lista.addFirst(u);
     }
 
@@ -138,8 +112,9 @@ public class Principal {
      *
      * Método DFS(G)
      * @param G Grafo na forma de uma matriz de adjacência
+     * @param lista Lista com a ordenação topológica de G
      */
-    public static void buscaEmProfundidadeRecursivo(int[][] G) {
+    public static void buscaEmProfundidadeRecursivo(int[][] G, LinkedList lista) {
         //Quantidade vértices do grafo
         int n = G.length;
 
@@ -163,7 +138,7 @@ public class Principal {
         for (int u = 0; u < n; u++) {
             //Somente vértices nao visitados
             if (cor[u] == BRANCO) {
-                buscaEmProfundidadeVisita(G, u);
+                buscaEmProfundidadeVisita(G, u, lista);
             }
         }
     }
@@ -174,11 +149,13 @@ public class Principal {
      * Tempo Theta(V+E)
      * 
      * @param G Grafo na forma de uma matriz de adjacência a ser ordenado
+     * @return Lista com a ordenação topológica de G
      */    
-    public static void ordenacaoTopologica(int[][] G) {
-        lista = new LinkedList();
+    public static LinkedList ordenacaoTopologica(int[][] G) {
+        LinkedList lista = new LinkedList();
         //Vertice completamente visitado é adicionado ao inicio da lista no momento que é atribuido PRETO
-        buscaEmProfundidadeRecursivo(G);        
+        buscaEmProfundidadeRecursivo(G, lista);
+        return lista;
     }
 
     public static void main(String args[]) {
@@ -201,20 +178,20 @@ public class Principal {
     
         System.out.println(">>> Ordenação Topológica/Topological Sort <<<");
 
-        //Monta as árvores de busca
-        ordenacaoTopologica(G);
+        //Lista do retorno da ordenação topologica
+        LinkedList lista = ordenacaoTopologica(G);
 
         System.out.println();
         System.out.println("Ordem de Vestir d[x]/f[x]");
         for(int i=0;i<lista.size();i++){
             int u = (int)lista.get(i);
-            System.out.println((i+1)+"="+trocar(u));  
+            System.out.println((i+1)+"="+trocar(u)+ "=" + d[i] + "/" + f[i]);              
         }
 
         System.out.println();
         System.out.println("Ordem de execução inversa de d[x]/f[x]");
         for (int i = G.length-1; i >= 0; i--) {
-            System.out.println(trocar(i) + "=" + d[i] + "/" + f[i]);
+            System.out.println((i+1)+"="+trocar(i) + "=" + d[i] + "/" + f[i]);
         }
     }
 }
