@@ -77,9 +77,10 @@ public class Principal {
     public static void buscaEmProfundidadeVisita(int[][] G, int u, LinkedList lista) {
         //Quantidade vértices do grafo
         int n = G.length;
-
+        
+        //Vértice branco u acabou de ser descoberto
         cor[u] = CINZA;
-        tempo = tempo + 1; //Vértice branco u acabou de ser descoberto
+        tempo = tempo + 1; 
         d[u] = tempo;
         // Exporar as arestas (u,v)
         for (int v = 0; v < n; v++) {
