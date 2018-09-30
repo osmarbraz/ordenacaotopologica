@@ -70,7 +70,7 @@ public class Principal {
      *
      * Método DFS-Visit(G,u)
      * 
-     * @param G Matriz de incidência do grafo
+     * @param G Matriz de adjacência do grafo
      * @param u Vértice raiz da árvore de busca
      * @param lista Lista com a ordenação topológica de G
      */
@@ -161,7 +161,7 @@ public class Principal {
 
     public static void main(String args[]) {
 
-        //Matriz de incidência para um grafo direcionado     
+        //Matriz de adjacência para um grafo direcionado     
         //Grafo do slide 9
         //Página 446 Thomas H. Cormen 3ed
        
